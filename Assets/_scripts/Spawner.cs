@@ -8,6 +8,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] EnemyMovement objectToSpawn = null;
     [SerializeField] float secondsBetweenSpawns = 2f;
     [SerializeField] int spawnCount = 5;
+    [SerializeField] AudioClip spawnSoundFX = null;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class Spawner : MonoBehaviour
     {
         while (spawnCount > 0)
         {
+            GetComponent<AudioSource>().PlayOneShot(spawnSoundFX);
             var newEnemy = Instantiate(objectToSpawn, transform.position, Quaternion.identity);
             newEnemy.transform.parent = gameObject.transform;
             spawnCount--;

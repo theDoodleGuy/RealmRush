@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public float healthPoints = 10;
     [SerializeField] Text healthText = null;
+    [SerializeField] AudioClip playerDamageSoundFX = null;
 
 
     private void Start()
@@ -22,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void ProcessHit(float damage)
     {
+        GetComponent<AudioSource>().PlayOneShot(playerDamageSoundFX);
         if (damage >= healthPoints)
         {
             healthPoints = 0f;

@@ -9,6 +9,16 @@ public class Health : MonoBehaviour
     [SerializeField] ParticleSystem hitParticleFX = null;
     [SerializeField] ParticleSystem deathParticleFX = null;
     [SerializeField] ParticleSystem explodeParticleFX = null;
+    [SerializeField] AudioClip hitSoundFX = null;
+    [SerializeField] AudioClip deathSoundFX = null;
+    [SerializeField] float deathSFXVolume = 1f;
+
+    AudioSource enemyAudioSource;
+
+    private void Start()
+    {
+        enemyAudioSource = GetComponent<AudioSource>();
+    }
 
     private void OnParticleCollision(GameObject other)
     {
@@ -21,6 +31,7 @@ public class Health : MonoBehaviour
 
     void ProcessHit()
     {
+        enemyAudioSource.PlayOneShot(hitSoundFX);
         healthPoints -= 1;
         hitParticleFX.Play();
     }
@@ -28,6 +39,7 @@ public class Health : MonoBehaviour
     void Death()
     {
         var deathfx = Instantiate(deathParticleFX, transform.position, Quaternion.identity);
+        AudioSource.PlayClipAtPoint(deathSoundFX, Camera.main.transform.position, deathSFXVolume);
         deathfx.Play();
         Destroy(gameObject);
     }
